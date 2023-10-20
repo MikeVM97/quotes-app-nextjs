@@ -10,7 +10,13 @@ type Props = {
 };
 
 export async function GET(request: Request, { params: { id } }: Props) {
-  const quote = await getRandomQuote(id);
-  
-  return NextResponse.json(quote);
+  try {
+    const quote = await getRandomQuote(id);
+    if (!quote) return NextResponse.json({ error: 'Quote not found' });
+    return NextResponse.json(quote);
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message });
+    }
+  }
 }

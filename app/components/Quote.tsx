@@ -19,12 +19,13 @@ import { useState, useEffect } from "react";
 export default function Quote() {
   const [fade, setFade] = useState(false);
   const [quote, setQuote] = useState<Quote | undefined>(undefined);
-  const [id, setId] = useState(10000);
+  const [id, setId] = useState(1);
 
   useEffect(() => {
     const getQuote = async () => {
       const res = await fetch(`/api/randomquote/${id}`, { cache: "no-store" });
       const json = await res.json();
+      // console.log(json)
       setQuote(json);
     };
 
